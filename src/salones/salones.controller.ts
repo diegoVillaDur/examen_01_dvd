@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { Salon } from './models/salon';
 import { CreateSalonDto } from './dto/create-salon.dto';
 import { SalonesService } from './salones.service';
@@ -7,6 +7,16 @@ import { SalonesService } from './salones.service';
 export class SalonesController {
 
     constructor(private salonService: SalonesService) { }
+
+    @Get()
+    get(): Salon[] {
+        return this.salonService.getAllSalones();
+    }
+
+    @Get(':id')
+    getById(id: number): Salon {
+        return this.salonService.getSalonById(id);
+    }
 
     @Post()
     create(@Body() nuevoSalon: CreateSalonDto): Salon {
@@ -23,5 +33,8 @@ export class SalonesController {
         };
     }
 
-    
+    @Put(':id')
+    update(@Param('id') id: number, @Body() salonActualizado: CreateSalonDto): Salon {
+        return this.salonService.updateSalon(id, salonActualizado);
+    }
 }

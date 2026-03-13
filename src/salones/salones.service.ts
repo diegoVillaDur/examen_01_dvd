@@ -21,8 +21,22 @@ export class SalonesService {
         return salon;
     }
 
+    getSalonById(id: number): Salon {
+        return this.salones[id];
+    }
+
     getAllSalones(): Salon[] {
         return this.salones;
+    }
+
+    updateSalon(id: number, salon: CreateSalonDto): Salon {
+        const salonUpdate = this.getSalonById(id);
+        if (salonUpdate) {
+            salonUpdate.nombre = salon.nombre;
+            salonUpdate.capacidad = salon.capacidad;
+            salonUpdate.edificio = salon.edificio;
+        }
+        return salonUpdate;
     }
 
     deleteSalon(id: number): void {
